@@ -1,0 +1,33 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+.form{
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px;
+  gap: 10px;
+  border: 5px solid #141414;
+  border-radius: 8px;
+  margin: 13px;
+}
+
+.form input{
+  border-radius: 4px;
+  margin: 2px 0px;
+}
+
+.form button{
+  justify-content: center;
+  margin-left: 35%;
+  width: 25%;
+  cursor: pointer;
+  background-color: antiquewhite;
+}
+
+.card {
+  padding: 2em;
+}
