@@ -1,0 +1,100 @@
+.container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(#121212, #212b46); 
+}
+
+/* linear-gradient é para um degradê, começando da cor do 1 argumento até o do 2 argumento*/
+
+.title{
+    font-size: 85px;
+    color: #FFF;
+    animation: animacaoTitulo 1s;
+}
+
+@keyframes animacaoTitulo {
+    from{
+        transform:rotateX(90deg);
+    }
+    to{
+        transform: rotateX(0deg);
+    }
+}
+
+/* cada animação é declarada em keyframes e recebe o seu nome logo depois da declaração.
+    from : começa assim to: termina assado
+    quando for chamada, basta usar o parâmetro animation do css, passando o nome do animação e o tempo que ela irá levar
+*/
+
+.containerInput{
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    margin: 34px 0;
+    display: flex;
+    border-radius: 8px;  /* raio da borda */
+    box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.8);
+}
+
+.containerInput input{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #FFF;     /* para quando digitar ficar branco */ 
+    outline: none;     /* espécie de linha em volta do input*/
+    margin-right: 8px; /* afastar da lupa */
+}
+
+.containerInput input::placeholder{
+    color:#F1F1F1;
+}
+
+.buttonSearch{
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.5s; /* se refere ao transform declarado no hover */
+}
+
+.buttonSearch:hover{
+    transform: scale(1.3);  /* aumentar a lupinha */
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #FFF;
+    width: 500px;
+    border-radius: 8px;
+}
+
+.main h2{
+    margin: 15px 0;  /* margem de cima de baixo 1 arg e 2 arg dos lados */
+    font-size: 39px;
+}
+
+.main p{
+    margin-bottom: 15px;
+    font-weight: bold;  /* negrito. nunca use <b> */
+}
+
+/* media para ficar responsivo, para nao perder o tamanho quando 
+mudar a resolução. ATÉ 620px os tamanhos serão diferentes*/
+@media (max-width: 620px){
+    .title{
+        font-size: 60px;
+    }
+    .main h2{
+        font-size: 28px;
+    }
+    .main{
+        width: 80%;
+    }
+}
