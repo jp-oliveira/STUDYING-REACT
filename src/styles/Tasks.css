@@ -1,0 +1,29 @@
+.task-container{
+    background-color: #444;
+    margin: 8px 0;
+    padding: 15px 20px;
+    display: flex;
+    border-radius: 5px;
+    justify-content: space-between;
+    color: #EEE;
+    align-items: center;
+}
+
+.task-container-title{
+    cursor: pointer;
+}
+
+.buttons-container{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.img_delete, .img_info{
+    background-color: #444;
+    border: none;
+    font-size: 24px;
+    margin: 0 5px;
+    cursor: pointer;
+    color: chartreuse;
+}
