@@ -1,0 +1,29 @@
+.home_container{
+    width: 100%;              /*100% da section, do container que o abriga */
+    display: flex;          
+    flex-direction: column;  /*Layput colunar, um item abaixo do outro */
+    align-items: center;     /*Centraliza os itens na vertical */
+    justify-content: center; /*Centraliza os itens na horizontal */
+    padding: 4em;
+}
+
+.home_container h1{
+    font-size: 2.5em;
+    margin-bottom: .5em;
+}
+
+.home_container h1 span{
+    color: #ffbb33;
+    padding: 0 .2em;;  /* deslocar o texto do fundo, para a letra nao ficar colada com o fundo */
+    background-color: #222;
+}
+
+.home_container p {
+    margin-bottom: 1.5em;
+    color: #7b7b7b;
+}
+
+.home_container img{
+    width: 350px;
+    margin: 2em 0;
+}

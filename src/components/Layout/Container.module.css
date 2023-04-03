@@ -1,0 +1,20 @@
+.Container{
+    width: 1200px; /*largura do elemento máxima de 1200, enquanto footer e navbar terão tam maximo*/
+    display: flex;  /* disposição mais fácil dos elementos. vem em linhas */
+    justify-content: space-between; /* espaça os elementos de forma igual na horizontal */
+    margin:0 auto; /* centraliza na tela */
+    flex-wrap: wrap; /* quando os elementos filhos ultrapassarem o tam maximo, vao pra baixo criando uma nova linha */
+}
+
+.min-height{
+    min-height: 75%; /* ocupar um grande espaço da tela e não quero que essa classe seja propagada pra todos os elementos do container */
+}
+
+.start{
+    justify-content: flex-start;  /* vai colocar os conteúdos no inicio ao inves de ser space around*/
+}
+
+.column{
+    flex-direction: column;
+    justify-content: flex-start;
+}

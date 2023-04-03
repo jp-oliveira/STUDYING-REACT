@@ -1,0 +1,34 @@
+.footer{
+    background-color: #222;
+    color: #fff;
+    padding: 3em;
+    text-align: center;
+}
+
+.social_list{
+    display: flex; /* um icone ao lado do outro */
+    justify-content: center; /* centraliza os icones na horizontal */
+    /* align-itens center centraliza os icones na vertical */
+    list-style-type: none;
+}
+
+.social_list li{
+    margin: 0 1em; /* afastar os ícones na lateral */
+}
+
+.social_list li:hover{
+    color:#ffbb33 /* afastar os ícones na lateral */
+}
+
+.social_list svg{
+    font-size: 1.5em;
+    cursor: pointer; /* simula um link ao passar o mouse */
+}
+
+.copy_right{
+    margin-top: 2em;
+}
+
+.copy_right span{
+    font-weight: bold;
+}
