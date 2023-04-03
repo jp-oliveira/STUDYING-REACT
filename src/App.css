@@ -1,0 +1,4 @@
+.App {
+  display: flex;
+  flex-wrap: wrap; /* permite quebrar linha dentro de um flex container */
+}

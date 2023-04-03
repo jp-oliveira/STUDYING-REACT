@@ -1,0 +1,13 @@
+body {
+  background-color: #444;
+  color: #fff;
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 300;
+  font-size: 1.4rem;
+  display: flex;
+}
+
+h1, h2 {
+  font-weight: 300;  /* peso da fonte, o realçe dela */
+}
