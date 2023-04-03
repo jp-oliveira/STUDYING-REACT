@@ -1,0 +1,38 @@
+API
+	- Normalmente não estamos falando de tela, estamos falando de algo que responde as nossas chamadas, aonde pedimos algo e recebemos uma resposta. Uma requisição que traz uma resposta - pode ser um dado, um status, um texto, etc.
+	
+	- Simplifica o desenvolvimento de aplicações, não precisando de tela. Tem recursos e funcionalidades, que pode ser usado por vários elementos.
+	
+	- Se precisar ligar uma api a um sistema, é simples. Basta entender como funciona, como fazer as chamadas e como pegar as respostas. 
+	
+	Essas chamadas podem ser personalizadas.
+
+TIPOS DE API
+	- Pública = Qualquer um pode acessar (github por exemplo. lá tem um endpoint aonde é possível retirar informações, sem necessidade de autenticação ou token)
+	
+	- Privada = É utilizada para algum sistema interno da empresa, a api não é compartilhada externamente. Tipo uma área de membros especiais.
+	
+	- de terceiros = empresas disponibilizam apenas para quem pagou ou quem se registrou. Pode ser uma espécie de trava, devido à capacidade de usuários do servidor, etc.
+	
+COMUNICAÇÃO COM API
+	- Normalmente feita através de XML ou JSON. Entregam dados desses 2 tipos, muito por causa da facilidade do tratamento desse tipo de dado.
+	
+	- As requisições e respostas são feitas através do HTTP.
+	
+VERBOS HTTP
+	Normalmente fazemos uma requisição para uma url, também chamada de endpoint. Usamos, normalmente, o mesmo endpoint para diferentes tipos de verbo.
+	
+	GET    = Resgatar algum recurso.
+	POST   = Envio de dados a API.
+	DELETE = Remover registro do banco.
+	PUT    = Atualização de registros.
+	PATCH  = Atualização parcial de registros.
+
+ENDPOINT
+	Basicamente é a URL que acessamos da API para extrair uma resposta.
+	ex: /users/1 - GET
+	
+	- Mesmos endpoints com verbos diferentes podem ter resultados diferentes.
+	
+	- Essa á uma das técnicas para reduzir a complexidade e aplicar o padrão REST.
+	

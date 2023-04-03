@@ -1,0 +1,491 @@
+//1 - NULLING COALESCING OPERATOR
+
+//normalmente quando usamos o operador || ele faz assim:
+
+null || "alguma coisa"    = "alguma coisa"
+null || 27                = 27
+0    || "alguma coisa"    = "alguma coisa"
+
+//isso pode ser um inconveniente, pois 0 não é nulo. js tem alguns valores que são tidos como falsy, como por exemplo:
+//0, '', [], false, undefined, null, etc.
+
+//NCO entra nesse contexto:
+
+0 ?? "alguma coisa"  = 0. 
+//NCO não trata 0, [] e {} por exemplo como valores falsy.
+------------------------------------------------------------------
+//2 - em um objeto:
+
+const user = {
+	name: "fulano",
+	age: 27,
+	address: {
+		street: "teste",
+		number: "23",
+	}
+}
+
+'name'  in user = true,  pois name é um dos campos de user
+'name2' in user = false, pois name2 não é um campo de user.
+
+Object.keys(nome_do_objeto) = //retorna um vetor com todas as chaves do objeto
+
+Object.values(nome_do_objeto) = //retorna todos os valores. E SE UM DOS VALORES FOR UM OBJETO?
+
+Object.values(user) = "fulano","27", [object Object]
+
+SOLUÇÃO PARA ISSO: JSON.stringify(Object.values(user))
+
+Object.entries(user) = retorna um vetor de vetores, aonde cada vetor interno tem dois elementos. um é o nome da chave, o outro é o valor. tbm tem que botar dentro de JSON.stringify para ver objetos.
+-------------------------------------------------------------------
+3 - DICA EXTRA ( MYSELF)
+add a new property to an object:
+
+obj.NEW_KEY = "value3";
+obj["NEW_KEY"] = "value3";
+
+The first form is used when you know the name of the property. The second form is used when the name of the property is dynamically determined. Like in this example:
+
+var getProperty = function (propertyName) {
+    return obj[propertyName];
+};
+
+getProperty("key1");
+getProperty("key2");
+getProperty("key3");
+
+se eu botar somente obj["key2"] -> ele dará undefined.
+-------------------------------------------------------------------
+4 - DESESTRUTURAÇÃO
+
+remover parte de um objeto para uma variável a parte. 
+ex: const endereco = user.address
+
+como fazer de forma diferente?
+
+const {NOME_DE_UMA_CHAVE_EXISTENTE_NO_OBJETO} = OBJETO
+
+irá retornar a mesma coisa que o exemplo.
+posso colocar 2 chaves dentro do mesmo objeto:
+
+const { name, address} = user . também posso. agora tenho 2 variáveis,
+uma chamada name e outra user com a propriedade do objeto.
+
+se eu quiser que a chave tenha um outro valor? exemplo, quero desestruturar name mas quero que a variavel que o receba tenho outro nome
+
+const {age, name:OUTRO_NOME} = user
+
+e se eu colocar uma chave que não existe? não vai retornar nada. exceto se eu colocar um valor padrão:
+
+const {age, name:OUTRO_NOME, CHAVE_QUE_NAO_EXISTE} = "retorno padrão caso não encontre a variável"
+
+exemplo de uso:
+
+function show_Age({ age:obj_age }){
+	return obj_age
+}
+também posso fazer isso em construtores, métodos de classe, etc
+
+Se quiser colocar um valor padrão caso a chave não exista no objeto:
+
+function show_Age({ age:obj_age, outra_prop = "VALOR PADRÃO" }){
+	return obj_age
+}
+
+----------------------------------------------------------------
+5 - REST OPERATOR
+
+	5.1 = SPREAD OPERATOR
+		const numbersOne = [1, 2, 3];
+		const numbersTwo = [4, 5, 6];
+		const numbersCombined = [...numbersOne, ...numbersTwo];
+		
+		numbersCombined agora é [1,2,3,4,5,6]
+
+
+seguindo no raciocínio anterior:
+
+const {name, age, ...VARIAVEL} = user
+
+a variável chamada VARIAVEL terá todas as variáveis exceto as que tiverem sido mencionadas antes.
+
+exemplo com vetor:
+
+const vetor = [1,2,3,4,5,6,7,8,9,10]
+
+const [first, second, ...resto] = vetor
+first vira uma variável com o primeiro elemento do vetor.
+second do segundo. resto pega todo o resto.
+
+e se eu quiser pular um elemento?
+
+const [first,,third] = vetor
+terei duas variáveis, first e third.
+-------------------------------------------------------------------
+6 - SHORT SYNTAX
+baseado em 
+const vetor = [1,2,3,4,5,6,7,8,9,10]
+const [first,,third] = vetor // gera duas variaveis - first e third.
+var obj = {first, third}. // gera um objeto com duas chaves, sendo que a primeira é a dupla first:1, a segunda é a dupla third: 3.
+
+outro exemplo:
+
+var palavra  = "ooooii"
+var vetor2 = [palavra]
+
+//agora vetor2 é um vetor de um elemento só.
+-------------------------------------------------------------------
+7 - OPTIONAL CHAINING	
+
+const user = {
+	name: "Fulano",
+	age: 27,
+	address:{
+		street:"rua exemplo",
+		number: 23,
+		zip:{
+			code:"232323",
+			city: "Rio de Janeiro"
+		}
+	}
+}
+
+user.address.zip.code2 = não retornará nada, obviamente, porém dará erro.
+
+como evitar o erro?
+
+document.body.innerText = user.address?.zip?.code ?? "Não existe"
+
+o que esse comando faz?
+
+dentro de user, checa se a propriedade address existe. se existir, checa se existe a propriedade zip dentro de address. se existir, checa dentro de zip se a propriedade code existe. se existir, imprime isso. Se não, imprime não existe. Se em alguma das checagens de existência for exibido que uma propriedade não existe, ele para de checr na hora.
+
+melhor isso do que fazer vários operadores ternários um dentro do outro.
+
+E SE ELE TENTAR CHECAR SE UM MÉTODO EXISTE?
+
+ document.body.innerText = user.address?.funcao?.() "Não existe"
+ 
+ Assim não vai dar erro e sim undefined ou null.
+ ----------------------------------------------------------------------
+8 - MÉTODOS DE Array
+---------
+8.1 - MAP
+ 
+vetor  = ['A','B','C','D','E','F','G','H']
+vetor2 = [1,2,3,4,5,6,7,8,9,10]
+ for (const i of vetor){
+	 console.log(i)
+ }
+// IRÁ IMPRIMIR OS ELEMENTOS DO VETOR
+ // OUTRA FORMA QUE FAZ A MESMA COISA:
+vetor.forEach( item => {
+	console.log(item)
+})
+
+// DÁ NO MESMO. item podia ser na verdade qualquer nome. OUTRA FORMA QUE FAZ A MESMA COISA:
+
+const novo_vetor = vetor2.map(item => {
+	return item * 2
+})
+ 
+ //VANTAGENS DE USAR MAP: PODER USAR FUNÇÕES COMO RETORNO
+ // o método map SEMPRE retorna um array do mesmo tamanho que o original. SEMPRE. ou seja, só é útil usar map quando se quer ter um novo array a partir do original ou exibir um conteudo transformado do array original.
+ ex:
+ 
+ const novo_vetor = vetor2.map(item => {
+	return item % 2 === 0 ? item * 10 : item
+})
+-----------
+8.2 - FILTER
+
+//retorna uma parte do array baseado em uma seleção. ele não altera o array, ele só pega parte dele. ex:
+
+const novovetor = vetor2.filter(item => item % 2 != 0) //.se for true, o novo vetor só vai ter os elementos ímpares.
+
+//MAP E FILTER AO MESMO TEMPO:
+const novovetor = vetor2
+	.filter(item => item % 2 == 0)
+	.map(item => item * 10)
+	
+//RETORNA SOMENTE OS PARES E MULTIPLICADOS POR 10
+-------------
+8.3 - EVERY
+
+//retorna true ou false. só retorna true se TODOS os itens satisfazem a uma condição. ex:
+
+vetor  = ['A','B','C','D','E','F','G','H']
+vetor2 = [1,2,3,4,5,6,7,8,9,10]
+
+const vetor_eh_numerico = vetor2.every(item => type of item == "number");
+OU
+
+const vetor_eh_numerico = vetor2.every(item => {
+	return type of item == "number";	
+}
+
+console.log(vetor_eh_numerico)   = vai dar true.
+------------------
+8.4 - SOME
+// retorna true ou false se PELO MENOS UM dos elementos do vetor satisfaz a uma condição.
+
+const vetor_eh_numerico = vetor2.some(item => {
+	return type of item == "number";	
+}
+--------------------
+8.5 - FIND E FINDINDEX
+
+//FIND = ENCONTRA O PRIMEIRO ITEM DO ARRAY QUE SATISFAÇA A UMA CONDIÇÃO.
+
+const par = array.find(item => item % 2 == 0)  // encontra o 2, encontra o primeiro.  
+const impar = array.find(item => item % 2 != 0)  // encontra o 1, encontra o primeiro.  
+
+//SE NÃO ENCONTRAR NENNHUM, RETORNA UNDEFINED.
+
+// o findIndex retorna o ÍNDICE desse primeiro elemento.
+-----------------------
+8.6 - REDUCE
+
+//USADO QUANDO SE QUER CRIAR UMA NOVA ESTRUTURA DE DADOS A PARTIR DE UM ARRAY.
+
+vetor  = ['A','B','C','D','E','F','G','H']
+vetor2 = [1,2,3,4,5,6,7,8,9,10]
+
+const operacao = vetor.reduce((1arg, item) => {
+	return 1arg + item
+}, 2arg)
+
+1arg = o nome dessa nova estrutura. geralmente chamada de acc , de accumulator.
+2arg = qual o valor inicial dessa nova estrutura de dados que eu quero criar a partir do array.
+exemplo = se eu for fazer uma operação com numeros, devo começar com um numero se eu quiser criar um objeto, boto {}. um vetor novo, coloco um [].
+
+//exemplos:
+
+const soma = vetor.reduce((acc, item) => {
+	return acc + item
+}, '')
+
+console.log(soma) // 'ABCDEFGHIJKLM'
+
+const soma2 = vetor2.reduce((acc, item) => {
+	return acc + item
+}, 0)
+
+console.log(soma2) // 55
+
+//também poderia fazer com push se fosse um vetor o elemento a ser criado, por exemplo.
+---------------------------------------------------------------
+9 - TEMPLATE LITERALS
+
+const name = "felipe"
+
+const message = "Bem-vindo, " + name
+
+//OUTRA FORMA USANDO TEMPLATE LITERALS:
+
+const message2 = `Bem-Vindo, ${name}`
+
+//exemplo de uso:
+const name2 = null
+const message3 =  `Bem-Vindo, ${name2 ?? 'visitante'}` // Bem-Vindo, visitante. se
+---------------------------------------------------------------
+10 - TAGGED TEMPLATES
+https://www.alura.com.br/artigos/tagged-template-literals
+
+chamar função com template literal -  minha_func`eu sou eu`
+a string passada na verdade é passada como array, etc.
+---------------------------------------------------------------
+11 - PROMISES
+
+//-> nem tudo na programação é síncrono. Ou seja, nem tudo acontece de maneira sequencial. Há comandos que levam mais tempo para acontecer porque têm alguma latência vinculada a ele. Como uma consulta a uma api por exemplo. Então o resto do código não pode esperar esse comando acontecer. Esses comandos devem acontecer de forma paralela.
+
+// daí vem promise. uma promessa.
+
+const somaDoisNumeros = (a,b) => {
+	
+	return new Promise( (resolve, reject) => {
+		setTimeout( () => {
+			resolve(a + b)
+		}, 2000);
+	});
+}
+// new Promise é uma arrow function com esse estrutura.
+//resolve é uma função chamada se der tudo certo. Reject é chamada quando dá ruim.
+
+somaDoisNumeros(1,4) //= se chamar assim não vai retornar nada, pois o resultado só vem em 2 segundos e ele é uma promessa.
+
+somaDoisNumeros(1,4).then(soma => console.log(soma)) // agora sim vai exibir, pois uma promise precisa de um comando then.
+
+// se a função fosse assim:
+
+const somaReject = (a,b) => {
+	
+	return new Promise( (resolve, reject) => {
+		setTimeout( () => {
+			reject(a + b)
+		}, 2000);
+	});
+}
+
+// e eu chamasse assim:
+
+somaReject(1,4).then(soma => console.log(soma)) // iria dar erro, pois o reject só é chamado quando dá erro. como deu um acerto e ele não previu acerto, dá erro.
+
+//chamada com erro que daria certo:
+somaReject(1,4)
+	.then(soma => console.log(soma))
+	.catch(erro => console.log(erro))
+	
+// exemplo mais real:	
+fetch("https://api.github.com/users/jp-oliveira")
+    .then(resposta => console.log(resposta))
+    .catch(erro   => console.log(erro))
+
+//porém resposta retorna um objeto. melhor assim:
+
+fetch("https://api.github.com/users/jp-oliveira")
+    .then(resposta => {
+		resposta.text()
+		.then(
+			resposta_da_resposta => {
+				console.log(resposta_da_resposta)
+			}
+		)
+	})
+    .catch(erro => {console.log(erro)})
+	
+// há um then depois um then porque a função text também é uma promise. json também. Logo, ela precisa de um then também.
+//text retorna o texto todo da resposta. melhor seria com json:
+
+fetch("https://api.github.com/users/jp-oliveira")
+    .then(resposta => {
+		resposta.json()
+		.then(
+			resposta_da_resposta => {
+				console.log(resposta_da_resposta)
+			}
+		)
+	})
+    .catch(erro => {console.log(erro)})
+	
+// MELHORANDO ESSA ESCRITA:
+
+fetch("https://api.github.com/users/jp-oliveira")
+    .then(resposta => {
+		return resposta.json();
+	})
+	.then(resposta2 => {
+		console.log(resposta2);
+	})
+    .catch(erro => {
+		console.log(erro)
+	})
+	
+// por final, existe o método finally, que é executado independente se a chamada foi bem ou mal sucedida. é executada, obviamente, no final. interessante para tirar um loading da tela.
+
+fetch("https://api.github.com/users/jp-oliveira")
+    .then(resposta => {
+		return resposta.json();
+	})
+	.then(resposta2 => {
+		console.log(resposta2);
+	})
+    .catch(erro => {
+		console.log(erro)
+	})
+	.finally(() => {
+		console.log("finalizei a chamada")
+	})
+	
+// forma diferente de fazer a chamada acima, porém com async await
+
+async function busca_github(){
+	try{
+		const resposta = await fetch("https://api.github.com/users/jp-oliveira");
+		const resposta2 = await resposta.json()
+	}
+	catch{
+		console.log(erro)
+	}
+	finally{
+		console.log("finalizei a chamada")
+	}
+}
+
+//SE UMA LINHA POSSUIR AWAIT, O COMANDO DE BAIXO SÓ ACONTECE DEPOIS DESSA LINHA SER EXECUTADA.
+//TODA FUNÇÃO COM ASYNC VIRA UMA PROMISE. OU SEJA, E SE EU QUISESSE PEGAR O RESULTADO DESSA FUNÇÃO ACIMA?
+
+busca_github().then( retorno => {
+	console.log(retorno)
+})
+
+----------------------------------------------------------------
+
+//export e import = posso exportar funções e também variáveis, ex:
+
+arquivo3.js
+
+export const pi = Math.PI;
+
+export function soma(a,b) {
+	return a + b
+}
+export funcion sub(a,b){
+	return a - b
+}
+
+// o nome que eu exporto tem que ser o mesmo nome que eu importo. Claro, se quiser faça um alias.
+
+ex:  import { soma as minha_soma} from './arquivo3'
+
+//////
+supondo arquivo 1 e 2 na mesma pasta
+
+arquivo1.js
+
+export funcion sum(a,b){
+	return a + b
+}
+
+arquivo2.js
+
+import {sum} from './arquivo1'
+console.log(sum(3,2))
+
+// QUANDO SÓ HÁ UMA EXPORTAÇÃO, UMA ALTERNATIVA SERIA USAR EXPORT default. ex:
+arquivo1.js
+export default funcion sum (a,b){
+	return a + b
+}
+
+arquivo2.js
+import sum from './arquivo1'  //nesse caso eu não preciso da barra e inclusive posso importar com outro nome. ex:
+
+import soma from './arquivo1'  //porém, eu não gosto disso.
+
+//E QUANDO HÁ MUITAS EXPORTAÇÕES?
+
+import * as arq3 from './arquivo3'
+console.log(ar3.soma(1,2))
+
+// e se quiser exportar e importar no mesmo arquivo??
+arquivo2.js
+export {soma} from './arquivo3'
+
+o arquivo exportou uma função que nem é dele.
+
+<video src="aaa" controls /> - sem control dá ruim, os comandos de play, pause, etc não aparecem
+
+------------------------------------------
+
+//MANEIRA MAIS ENXUTA DE DECLARAR COMPONENTE
+
+export default () => 
+    
+    <>
+        <h1> Primeiro Componente</h1>
+        <h2>Exemplo de um componente React</h2>
+    </>
+-------------------------------------------
+
+Array(10).fill(0)

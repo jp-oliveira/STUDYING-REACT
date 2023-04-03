@@ -1,0 +1,202 @@
+FLEXBOX 
+
+	ter um elemento PAI que passará um estilo para seus filhos.
+
+ex 1:
+
+<main class="container">
+	<div class="bloco-1">1</div>
+	<div class="bloco-2">2</div>
+	<div class="bloco-3">3</div>
+</main>
+
+A PRINCÍPIO, AS DIVS ESTARÃO UMA EM CIMA DA OUTRA, pois o padrão do css é colocar a disposição dos elementos no canto esquerdo superior - o eixo vertical é o principal
+
+MELHORANDO O CSS:
+
+.container {
+	display: flex
+}
+
+-- o eixo principal agora é o horizontal. o eixo secundário é o vertical agora.
+
+1 - PROPRIEDADE flex-direction
+
+define qual o eixo principal dos elementos - vertical ou horizontal.
+o padrão é  row.
+
+flex-direction: row; /* linha, na horizontal */
+
+também é possível trocar o sentido:
+
+flex-direction: row-reverse;
+
+e se for colocar na vertical:
+flex-direction: column;
+
+trocando o sentido:
+flex-direction: column reverse;
+-----------------------------------------------------
+2 - PROPRIEDADE justify-content - disposição dos elementos no eixo principal.
+
+justify-content: flex-start;  /* todos os elementos dentro do container vão para o inicio do eixo */
+
+justify-content: flex-end;  /* todos os elementos dentro do container vão para o fim do eixo */
+
+justify-content: center;  /* todos os elementos dentro do container vão para o centro do eixo */
+
+justify-content: space-between /* todos os elementos dentro do container vão se distribuir ao longo do eixo. o primeiro para o inicio, o ultimo no final e os demais dispostos no meio. */
+
+justify-content: space-around /* Bota uma espécie de margin no começo e no final do container. as margens do meio tem o dobro do tamanho.
+
+|MARGIN1 ELEMENTO1  MARGIN1*2 ELEMENTO X  MARGIN1*2 ELEMENTO N  MARGIN1|
+*/
+--------------------------------------
+3 - PROPRIEDADE align-items - disposição dos elementos no eixo secundário.
+
+align-items: as propriedades têm o MESMO raciocínio que jutify content, a diferença é que muda o eixo. flex-start é no começo do eixo secundário, flex-end no final, assim por diante.
+
+align-items: stretch; /* ocupam TODO o espaço do eixo secundário possível - isso se nao tiverem uma altura pré definida ou um padding por exemplo.*/
+
+align-items: baseline; /* Alinha os elementos com base no conteúdo dos filhos. the flexbox items will align themselves in order to have the baseline of their text align along a horizontal line (se o padrão for vertical). */
+----------------------------------------
+4 - PROPRIEDADE flex-wrap - no padrão, os elementos sempre tentam caber em uma linha só, sempre ficam juntinhos demais. o padrão é:
+flex-wrap: nowrap;
+
+flex-wrap: wrap; /* dá a chance de descer mais de uma linha. Se assim não fosse, o css podia arranjar uma forma de espremer todo mundo pra caber numa linha só.*/
+
+flex-wrap: wrap-reverse; /* ao invés de quebrar para baixo, sobe mais uma linha. ou seja, os elementos que couberem numa linha ficam embaixo e os que sobrarem ficam em cima */
+-----------------------------------------
+5 - PROPRIEDADE flex-flow - declarar flex direction junto com flex-flow.
+
+flex-flow: row wrap; - equivalente a:
+
+flex-direction: row;
+flex-wrap: wrap;
+-------------------------------------------
+6 - PROPRIEDADE align-content -> alinhar elementos em mais de uma linha, sempre quando estou utilizando o wrap. alinhamento no eixo SECUNDÁRIO.
+
+align-content: flex-start; /* As linhas vão para o começo do eixo*/
+align-content: flex-end;   /* As linhas vão para o fim do eixo*/
+align-content: center;     /* As linhas vão para o centro do eixo*/
+align-content: space-between; /* a primeira linha vai pro topo e a ultima vai pro final. as demais se dividem no meio. */
+align-content: space-around; /* mesmo raciocinio que antes */
+----------------------------------------------
+7 - PROPRIEDADE gap
+
+gap: 20px; /* coloca 20px de distância entre cada um dos elementos */
+
+gap: 10px 30px; /* 10px de distância entre as linhas e 30px entre as colunas */
+
+se preferir não usar 2 argumentos em gap, use assim:
+
+row-gap: 10px;
+column-gap: 30px;
+-----------------------------------------------
+8 - order
+
+IMPLICITAMENTE, todos os elementos filhos tem um order: 0.
+
+podemos mudar isso. order:-1, order:0, order:1, order:2, order:3, você escolhe. é ordem da esquerda para a direita, de maneira crescente.
+
+se ambos os elementos estiverem com a mesma ordem, a ordem levada em conta vai ser a da declaração no html
+
+-------------------------------------------------
+9 - flexgrow
+
+por padrão, todos são zero. mais explicado no código
+SE UM FLEX-GROW É 2 E OS OUTROS SÃO 1: NÃO É QUE O BLOCO TEM O DOBRO DO TAMANHO DOS OUTROS. O QUE TEM O DOBRO É O CRESCIMENTO DELE EM RELAÇÃO AOS OUTROS.
+-------------------------------------------------
+10 - flexshrink
+
+por padrão, todos são 1. mais explicado no código. 
+SE UM FLEX-SHRINK É 2 E OS OUTROS SÃO 1: NÃO É QUE O BLOCO TEM METADE DO TAMANHO DOS OUTROS. O QUE TEM METADE É O QUE ELE ENCOLHE EM RELAÇÃO AOS OUTROS. Se colocar 0, ele não vai decair.
+
+P/ FLEXGROW E FLEXSHRINK: https://www.youtube.com/watch?v=hjz6ezV9_uc
+---------------------------------------------------
+11 - Flex Basis
+mais explicado no código.   flex-basis auto é uma ordem para privilegiar o width e height declarados. e se não tiver width e height??
+
+flex basis auto sem largura e altur declarados equivaleria ao tamanho dos conteúdos de cada div somente. se o conteúdo da div fosse grande, a div seria grande. caso contrário, seria pequeno. O mesmo se aplica ao flex basis: 0. segue o mesmo raciocínio.
+------------------------------------------------------
+12 - flex = flex basis, flex auto e flexgrow em um comando só.
+-------------------------------------------------------
+13 - align-self
+o elemento que tiver align self não vai respeitar o align-itens, vai ter o seu próprio alinhamento no eixo secundário. ex:
+
+align-self: flex-end, ou align-self: flex-start
+---------------------------------------------------------------------
+.container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(#121212, #212b46); 
+}
+
+/* linear-gradient é para um degradê, começando da cor do 1 argumento até o do 2 argumento*/
+----------------------------------------------------------------------
+.title{
+    animation: animacaoTitulo 1s;
+}
+
+@keyframes animacaoTitulo {
+    from{
+        transform:rotateX(90deg);
+    }
+    to{
+        transform: rotateX(0deg);
+    }
+}
+
+/* cada animação é declarada em keyframes e recebe o seu nome logo depois da declaração.
+    from : começa assim to: termina assado
+    quando for chamada, basta usar o parâmetro animation do css, passando o nome do animação e o tempo que ela irá levar
+*/
+-------------------------------------------------------------------------------------
+.containerInput{
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;  /* raio da borda */
+    box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.8);
+}
+
+.containerInput input{
+    color: #FFF;     /* para quando digitar ficar branco */ 
+    outline: none;     /* espécie de linha em volta do input*/
+    margin-right: 8px; /* afastar da lupa */
+}
+
+.containerInput input::placeholder{
+    color:#F1F1F1;
+}
+
+.buttonSearch{
+    transition: transform 0.5s; /* se refere ao transform declarado no hover */
+}
+-----------------------------------------------------------------------------
+.buttonSearch:hover{
+    transform: scale(1.3);  /* aumentar a lupinha */
+}
+
+.main h2{
+    margin: 15px 0;  /* margem de cima de baixo 1 arg e 2 arg dos lados */
+}
+
+.main p{
+    font-weight: bold;  /* negrito. nunca use <b> */
+}
+-------------------------------------------------------------------------------
+/* media para ficar responsivo, para nao perder o tamanho quando 
+mudar a resolução. ATÉ 620px os tamanhos serão diferentes*/
+@media (max-width: 620px){
+    .title{
+        font-size: 60px;
+    }
+    .main h2{
+        font-size: 28px;
+    }
+    .main{
+        width: 80%;
+    }
+}

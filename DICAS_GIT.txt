@@ -1,0 +1,220 @@
+1 - UM POUCO DA HISTÓRIA DO VERSIONAMENTO
+	CVS (1985)  
+		problemas do cvs: consistência e velocidade.
+
+		1 - Não permitia coisas simples, tipo renomear um arquivo, mover arquivos de pastas.
+		2 - Commit com tempos demorados, as vezes chegando a 4 minutos
+
+	SVN (2000)
+		É um CVS like (também é centralizado e ope source). é melhor que esse, porém ainda levava cerca de 1,5 minutos por commit. Está ativo até hoje.
+
+	BitKeeper (2000)
+		Ao contrário do CVS e do SVN, é distribuído e não é open source. É proprietário. É CVS-Free.
+
+2 - Git init	
+	vai na pasta que você deseja trabalhar, clica com o botão direito e roda o bash do git com ela; Ou se quiser, vai dando cd até chegar na pasta.
+	no bash, rode :
+
+	Git init - Dado dentro da pasta para criar o repositório.
+	Perceba que irá aparecer (Master). significa que eu estou na branch master. É a principal. Só se roda git init uma vez por diretório.
+
+3 - Git Add (passo 1, coloca no staging area - também chamada de index ou cache. Vem antes de commit e antes de push)
+	Git Add NOME_DO_ARQUIVO = mandar o arquivo para a área de staging. It tells Git that you want to include updates to a particular file in the next commit. However, git add doesn't really affect the repository in any significant way—changes are not actually recorded until you run git commit .
+	
+	git add . = manda todos os arquivos para a área de staging
+	git add *.js = só coloca os arquivos de formato js. Também vale obviamente para todos os outros formatos
+	git reset HEAD -- ou git reset --  = tira todos os arquivos da staging area
+	git reset -- NOMEDOARQUIVO.COMFORMATO = tira somente um arquivo específico do stagingarea
+	
+	git add -i = -i de interativo. vai abrir um menuzinho. se eu escolher a opção 3 (revert) posso informar quais arquivos quero tirar do staging!! dando um de cada vez. enter volta ao menu.
+	
+	Na opção 2 (add untracked) eu posso informar quais arquivos quero colocar na staging. Como se tivesse dado git add manualmente arquivo por arquivo.
+	Na opção 7 eu saio.
+	
+4 - Git STATUS - 
+	exibe as mudanças a serem comitadas. mostra que há um novo arquivo adicionado na área de staging.
+
+5 - Git commit (passo 2, coloca no repositório local, antes de git push)
+	git commit -m "MENSAGEM_TITULO_DO_COMMIT"
+	git reset --hard HEAD^ = Limpar último commit
+	git reset --hard HEAD~x = limpar x últimos commits
+
+	https://gist.github.com/CrookedNumber/8964442
+
+6 - Extras e observações
+	git config --global user.email "emaildojpoliveira@gmail.com" - tive que usar esse comando
+	dei commit de novo e funcionou. agora dei git status e nothing to commit, working tree clean.
+	cls do windows equivale a clear no bash do git
+	echo 'CARDIOGRAMA' > teste1.txt = SE O ARQUIVO NÃO EXISTIR, cria um arquivo teste1.txt com o texto. Se o arquivo existir, acrescenta ao conteúdo dele o texto.
+	rm teste1.txt = remove o arquivo selecionado
+	cat teste1.txt = exibe no bash o conteúdo do arquivo. Tem outras aplicações, mas quando se menciona só o nome do arquivo, ele só mostra o conteúdo.
+	
+	O QUE É HEAD NO GIT = Basicamente, o HEAD diz onde estamos, e se criarmos outro commit, ele será colocado depois do commit para o qual o HEAD aponta. https://pt.stackoverflow.com/questions/528332/o-que-%c3%a9-head-no-git
+	
+	SE EU FOR ADICIONAR UM ARQUIVO MODIFICADO, lembra que eu preciso primeiro adicionar ele para a área de staging. Senão a mudança não vai ser computada. Então precisa primeiro dar o git add no arquivo modificado, comitar para ele ir para o repositório local e depois, se quiser subir para o github, dar o push.
+	
+	DICA DO READ ME: SE EU FOR DAR PUSH PARA UM REPOSITÓRIO QUE JÁ TEM README FILE:
+	git pull origin master
+	git push origin master
+	https://stackoverflow.com/questions/18328800/github-updates-were-rejected-because-the-remote-contains-work-that-you-do-not-h
+	
+	SE EU ADD UM ARQUIVO E MODIFICO ESSE ARQUIVO DEPOIS DE ADICIONAR MAS SEM COMITAR, ELE IRÁ APARECER TANTO EM Changes to be committed QUANTO EM Changes not staged for commit:
+	https://pt.stackoverflow.com/questions/325951/qual-a-diferen%c3%a7a-entre-as-op%c3%a7%c3%b5es-soft-mixed-e-hard-no-git-reset
+	
+7 - RENOMEAR / REMOVER A BRANCH ATUAL
+	OBS: as vezes o git chama master de main. Algumas empresas estão se adaptando para isso e outras não. para renomear:
+	git branch -M "main"
+	https://www.zdnet.com/article/github-to-replace-master-with-main-starting-next-month/
+
+	para remover:
+	git branch -d nome-da-branch  - APAGA SOMENTE A BRANCH LOCAL, NÃO BRANCH REMOTA (só os repositórios do seu pc, não os do github). 
+	
+	A opção -d é mais segura, pois ela só apaga a branch se você já tiver feito merge ou enviado as alterações para seu repositório remoto, evitando perda de código.
+	A opção -D ignora o estado da sua branch, forçando a sua remoção.
+
+8 - Criar um novo repositório no github
+	Criando um novo repositório no github - pq criar um repositório no github se ja fiz um na minha maquina? justamente por isso, queremos que tudo de um esteja no outro. github é uma página para hospedar nossos códigos, se eu trocar de máquina os arquivos estarão lá ainda.
+
+	quando se cria um repositório manualmente, o código necessário para se criar via linha de comando é exibido no github
+
+	echo "# TCC" >> README.md
+	git init
+	git add README.md
+	git commit -m "first commit"
+	git branch -M main
+	git remote add origin https://github.com/jp-oliveira/TCC.git
+	git push -u origin main
+
+SOBREA A PENÚLTIMA E A ÚLTIMA LINHA:
+
+9 - Git remote
+
+	git remote add origin LINK.git
+	remote = remote, uma criação de uma conexão local com o repositório do github. = https://petcomputacaoufrgs.github.io/intro-ao-git/git-remote.html
+	add = adicionar
+	origin é só o nome da conexão, você pode escolher qualquer nome.
+	é como um pedido:git, faça essa conexão do nosso repositório local com o repositório do github. origin é só um padrão, origin é como se fosse o nome da conexão. Cada diretório tem o seu remote
+
+	git remote rm <remote-name> = CASO TENHA COLOCADO O SITE ERRADO, BASTA INSERIR ESSE COMANDO PARA APAGAR O REMOTE
+	git remote -v to see the current remote URL.
+	git remote = lista os remotes.
+	
+	Posso ter quantos remotes eu quiser.
+
+10 - Git Push
+	
+	git push -u origin main - joga os arquivos para o site.
+	
+	lembrando: origin é o nome da conexão remota. main é a branch que você quer jogar.
+	
+	se der somente "git push", ele dará a seguinte sugestão: 
+	"git push --set upstream origin master (ou main)", para dar a sugestão de não precisar escrever origin main sempre.
+	
+	SEGUNDA VEZ QUE EU FOR DAR PUSH:
+		git push origin main
+
+	possivel problema = https://pt.stackoverflow.com/questions/371329/error-failed-to-push-some-refs
+
+	LEMBRANDO que posso dar push para OUTRA branch que não seja a branch principal. se eu der git push origin MAIN2, ele irá para outra branch, e não para a principal. Se a outra branch nÃO tiver readme, quando você subir para a outra branch, o github irá sugerir criar um read me. se você for subir para uma branch que já tenha readme, ver seção 6 desse texto.
+
+11 - PARA MUDAR DE BRANCH:
+	-b se for um branch nova. se ja existir, tira o -b, coloca só o nome.
+	git checkout -b "NOVO_NOME_BRANCH"
+	git checkout main = voltou para a main
+	lembre: uma nova branch  demanda um novo git push
+	
+	git push origin NOME_DA_BRANCH
+
+12 - MISTURAR BRANCHES
+	pegar uma branch e juntar com outra. supondo que eu esteja com 2 branches e agora eu quero colocar os arquivos de uma branch na branch principal.
+	
+	ANTES DE FAZER ISSO, VEJA SE NÃO SERIA NECESSÁRIO UM GIT PULL. I.e., se a sua branch remota estiver desatualizada, será necessário atualiza-la com o que está no github (em produção) para só depois mergear, pois pode ser que se esteja mergeando algo antigo se comparado ao que está no github.
+	
+	Estando na branch que vai receber as modificações, eu passo como argumento a branch que vai enviar:
+	git merge NOME_DA_OUTRA_BRANCH_COM_AS_MODIFICACOES
+	git push origin main
+
+13 - COMO PEGAR TODOS OS ARQUIVOS DE UM PROJETO E TRAZER PARA A MÁQUINA PESSOAL?
+	- É possivel favoritar um diretório e após isso ver os diretórios favoritados. clique em star
+	- há um botão verde em destaque chamado code. Dentro dele basta escolher clone.
+	
+	dentro de algum diretório, dê git clone LINK_DO_PROJETO. pronto. todos os códigos virão
+
+14 - E SE OS ARQUIVOS ESTIVEREM DESATUALIZADOS?
+	I.e. você fez um clone só que o projeto foi modificado. Você precisa atualizar os arquivos que voce colonou. basta ir para a pasta do projeto e dar um 
+	git pull.
+	
+15 - FORK
+	Se você quiser que um repositório de outra pessoa vá para o seu perfil no github? 
+	na parte superior direita de um projeto, existe o botão fork. Todos os arquivos desse repositório irão para o seu diretório.
+
+16 - PULL REQUEST
+	mandar uma solicitação para um usuário fazer um pull de uma mudança feita por você mesmo.
+	Supondo que você fez uma alteração no projeto de alguém. Para esse alguém validar a sua alteração, ele precisa aceitar a sua pull request.
+	Depois que você fez um fork, clica na página do projeto depois em contribute. Assim, clique em open pull request.
+	Primeiro ele vai dizer se você pode azer o merge diretamente. Normalmente quando você não pode é porque vocÊ alterou a mesma linha que a outra pessoa ja tinha alterado. Se ela tiver feito uma alteração no mesmo momento que você, pode haver um choque.
+	
+	O ideal é informar para a pessoa porque você está fazendo um pull request.
+	
+	E COMO ACEITA?
+	No página do projeto existe a parte de pull request ao lado de code.
+	clique em merge pull request e pronto.
+
+17 - LISTAR BRANCHS
+	git branch
+
+18 - LISTAR O QUE ESTÁ NO STAGING AREA
+	git ls-files -s
+
+19 - LISTAR REMOTES
+	git remote
+	
+20 - LIDANDO COM VERSIONAMENTO
+	supondo que eu atualize um arquivo de uma branch que ja foi commitada ( ou pushada?). Se eu der git status, ele vai avisar que um arquivo foi modificado.
+	
+	git log = lista os commits feitos, os autores, as mensagens de commit, as HASH e as datas, indicando quem é o atual.
+	git reflog = lista os começos das hash (chamemos de ID) de cada commit, a mensagem e o histórico. Esse ID pode ser usado no reset.
+	
+	SE EU QUISER VOLTAR UM ARQUIVO DE VERSÃO, COMO FAZER?
+	Exemplo: modifiquei um texto e comitei. mas fiz merda, então quero voltar o arquivo para alguma versão anterior. como fazer?
+	
+	git reset --hard ID_DO_COMMIT.  cuidado como esse comando, consulte sua equipe para saber se é assim que fazem
+	
+	git diff ID_DO_COMMIT ID_DE_OUTRO_COMMIT = exibe o que mudou de um commit para outro. os arquivos e o conteúdo.
+	 
+	git diff --cached = A opção --cached serve para comparar o cache (outro nome para staging area) com o último commit
+	 
+	Já diff sem argumentos compara o working dir com o staging area. Working dir é o que está no seu disco atualmente.
+	 
+21 - GIT RESET --ARGUMENTOS
+	
+	DICA: HEAD É COMO SE FOSSE UM PONTEIRO APONTANDO PARA O ULTIMO COMMIT.
+	git reset --soft_ou_mixed_ou_hard ID_DO_COMMIT
+
+	A opção --soft move o HEAD para o commit indicado, sem mudar o working dir e o staging area. Preciso passar como parâmetro o hash do commit que eu quero. Lembrando que esse hash pode ser achado em git log. Não preciso colocar o numero todo, apenas alguma parte do hash que torne o hash diferente dos demais.
+	
+	EXEMPLO:
+	git reset --soft HEAD~3 = volta para 3 commits atrás
+	
+	A opção --mixed é o default se nenhuma das opções for fornecida
+	Esta opção faz o mesmo que --soft (move o HEAD para o commit indicado) e, em seguida, ele atualiza o staging area com o conteúdo que está neste commit.
+	
+	A opção --hard faz tudo que --mixed faz, mas também sobrescreve o conteúdo do meu working dir. Ou seja, muda o commit, muda a staging area e muda o working dir- arquivo atual.
+		
+22 - GIT IGNORE
+	Caso haja algum arquivo que você tenha na sua pasta do git na sua máquina local mas não queira que ele entre no versionamento. exemplo uma foto ou arquivos secretos 
+	touch .gitignore
+	
+	isso faz criar um arquivo .gitignore. DENTRO DO ARQUIVO GIT IGNORE, VOCÊ COLOCA OS ARQUIVOS OU PASTAS QUE NÃO VÃO ENTRAR NO VERSIONAMENTO:
+	
+	pasta1/
+	arquivo1.txt
+	
+	e salva. Sim, você precisa dar um push com o gitinit.
+	
+23 - DICAS FABIO AKITA
+	git commit -m "MENSAGEM CONSERTADA" --amend -> CONSERTA A MSG DO ULTIMO COMMIT
+	
+	git rebase -i HEAD~3
+	i = interativo
+	listará os últimos 3 commits e dará uma opção de como agir nesses commits.

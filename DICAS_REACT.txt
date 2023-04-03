@@ -1,0 +1,453 @@
+
+
+UM COMPONENTE É UMA FUNÇÃO JAVASCRIPT (JSX)
+
+OBS: necessário ter o node instalado. estou usando o vscode.
+OBS2: a pasta não pode ter letra maiuscula.
+OBS3: na hora de instalar algum programa:
+
+npm install programa@latest  - faz atualizar para a versão mais recente do programa
+
+primeira ação a se fazer:
+na pasta que quero criar o app react:
+no cmd:
+npm create react-app .
+
+depois que tudo foi criado, observe o arquivo package.json. sim, quando se cria uma aplicação em node ele também é criado.
+
+repare na propriedade scripts: podemos usar o comando npm start, npm build, npm test ou npm eject. o padrão é, assim que se cria o app, começar por:
+
+npm start
+irá aparecer um site no localhost:3000. esse é o começo dos estudos.
+
+NO VIDEO DO DICAS PARA DEVS, FOI INSTALADO:
+npm install uuid  - gerar indices aleatórios
+npm install axios - requsições http
+npm install react-icons
+
+ctrl + j = esconde/exibe o terminal no vscode.
+
+NA PASTA PUBLIC:
+index.html = existe uma div com id="root". é nessa div que o react vai inserir os componentes, por meio do arquivo src/index.js
+
+CARACTERÍSTICA DO REACT:
+
+<COMPONENTE />
+se der ctrl+click nesse componente, veremos que ele foi definido. Ex clássico:
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+Esse react.Strict mode faz "rodar repetidamente pelo menos uma vez" - vídeo "O erro mais comum no React - 06:40"
+
+o componente se chama App. Existe uma função chamada App.js, o que define o componente. Essa função retorna uma mistura de html com js.
+
+ideia do react é essa: não escrever nada no html, deixar que ele reaja as mudanças nos componentes e aí sim depois colocar essas alterações nos componentes.
+
+primeiros passos:
+
+import React from 'react'
+
+const App = () => {
+  return(
+    <h1>OLÁ MUNDO.</h1>
+  )
+}
+
+export default App; = a index.js utiliza o app, por isso devemos exportar o App, para ele ser visto por todos, similar ao export module do nodejs
+
+dica:
+const mensagem = "OLÁ MUNDO"
+  return(
+    <h1>{mensagem}</h1>
+  )
+  
+  em react, tudo que está entre chaves no html é javascript.
+  - partes da aula que eram código somente
+  \/ https://stackoverflow.com/questions/74484170/error-in-usestate-line-1124-unexpected-empty-object-pattern-no-empty-pattern
+  
+  STATE
+	- É como se fosse uma variável aonde guarda um valor. Quando ele é atualizado, o componente é renderizado novamente.
+	- Sempre que o state é atualizado, o componente é alterado.
+	Variável normal quando alterada não atualiza o componente e o state atualiza.
+----------------------------------------------	
+dica de useState - Canal Hora de Codar
+
+const [number, SetNumber] = useState(1)
+
+const changeNumber = () => {
+	//Usando previous value, posso chamar useState várias vezes seguidas e não só uma. É mais correto gerenciar variáveis assim.
+	setNumber( (prevNumber) => { prevNumber + 1 } )
+	setNumber( (prevNumber) => { prevNumber + 1 } )
+}
+
+<button onClick={changeNumber}>
+
+
+--------------------------------------------------
+  /*
+DENTRO DO RETORNO SÓ PODE HAVER UM ÚNICO ELEMENTO, SENÃO DÁ ERRO
+ou bota tudo dentro de uma div ou faz o que é chamado de fragment:
+<>
+  coloca aqui os elementos.
+</>
+ou ainda
+<ReactFragment>
+  coloca aqui os elementos.
+</ReactFragment>
+*/
+
+- COMPONENTES DE REACT DEVEM COMEÇAR COM UPPERCASE LETTERS.
+
+PROPS=  dados que podem ser passados de um componente pai para um componente filho
+
+o App é um componente pai da Tasks, pois o app ta renderizando a Tasks. Sempre que um componente renderiza o outro, o que renderiza é componente pai
+
+imr no vs code faz ele ja gerar um import react automaticamente
+sfc no vs code faz ele ja gerar uma declaração de componente automaticamente
+
+o formato jsx é o recomendado para react, e não js.
+
+CHILDREN = tudo que fica dentro de um componente quando vc chama ele.
+
+exemplo de PROP:
+<meubotao PROP=x>
+
+elemento 1 e 2 são children nesse caso:
+<botao>
+	<elemento1>
+	<elemento2>
+</meubotao>
+
+npm install uuid
+
+NPM é um gerenciador de pacotes do node.
+se procurar por uuid no site do node, la terá a explicação.
+
+PASSAR PARÂMETRO POR URL:
+basta colocar no path da Route:
+
+path="/:PARAMETRO". quer dizer que ele só vai exibir o conteúdo da route quando a path inserida for igual ao parametro colocado.
+
+NA PÁGINA DE DESTINO, COMO RECEBER?
+
+import {useParams} from "react-router-dom"
+const params =  useParams();
+
+
+useEffect não retorna nada, não se pode colocar return em useEffect e também ele não pode ser assíncrono.
+/*useEffect: usaremos uma api para importar as tarefas e não
+  ficar escrevendo manualmente. usaremos um hook chamado useEffect para
+  carregar essas tarefas assim que a página é iniciada, pois é o nosso caso.
+  useEffect EXECUTA UM BLOCO DE CÓDIGO SEMPRE QUE A VARIÁVEL PASSADA NO
+  2 ARGUMENTO MUDAR. se eu passar 2 variáveis no segundo argumento, irá disparar
+  quando pelo menos uma das duas variáveis mudar.
+  Se o 2 argumento estiver vazio, quer dizer que deve executar quando o componente App
+  for montado pela primeira vez. TIPO UM ONLOAD.
+
+  para fazer requisições no react:
+
+  await axios.get ou axios.post. porque? porque a requisição deve ser assíncrona. 
+  só que comandos await devem estar dentro de uma função async.
+  essa é a maneira correta de chamar.
+*/
+
+todos os componentes do curso foram feito em componentes de função. ou seja, todos os componentes são uma função. App, Button, etc. Há uma forma de codar, de forma que os componentes sejam de classe, e não de função.
+DESVANTAGEM: não usa os hooks (useState,useEffect, useHistory, etc)
+
+exemplo:
+
+class NOME_DA_CLASSE extends React.Component {
+	render(){
+		return <h1> olá mundo</h1>
+	}
+
+}
+
+export default NOME_DA_CLASSE;
+///////////////////////////////////////////////
+melhorando, agora usando useState:
+
+class NOME_DA_CLASSE extends React.Component {
+	
+	constructor(){
+		super();
+		
+		this.state = {
+			message: "olá mundo"
+		}
+	}
+	render(){
+		return <h1>{this.state.message}</h1>
+	}
+
+}
+///////////////////////////////////////////////
+melhorando, agora usando useState e useEffect:
+
+class NOME_DA_CLASSE extends React.Component {
+	
+	constructor(){
+		super();
+		
+		this.state = {
+			message: "olá mundo"
+		}
+	}
+	
+	componentDidMount(){
+		console.log("SEMELHANTE AO ONLOAD")
+	}
+	
+	render(){
+		return <h1>{this.state.message}</h1>
+	}
+
+}
+///////////////////////////////////////////////
+melhorando, agora usando useState, useEffect e métodos:
+lembrando que são métodos porque estamos em uma classe
+
+class NOME_DA_CLASSE extends React.Component {
+	
+	constructor(){
+		super();
+		
+		this.state = {
+			message: "olá mundo"
+		}
+	}
+	
+	componentDidMount(){
+		console.log("SEMELHANTE AO ONLOAD")
+	}
+	
+	handleMessageChangeClick(){
+		this.setState({ message: "MESSAGE CHANGED"})
+	}
+	
+	render(){
+		return <h1>{this.state.message}</h1>
+		<button onClick={this.handleMessageChangeClick.bind(this)}></button>
+	}
+
+}
+
+erro: Each Child in a list should have a unique "key" prop.
+Se estamos fazendo map com um vetor ou objeto, por serem todos de um mesmo componente, é necessário uma tag key, pois o react precisa identificar cada componente de uma forma única.
+
+RESUMINDO: sempre que se fizer um map ou um loop e nesse loop renderizar mais de um componente por várias vezes, coloque o parâmetro id. Não é que vai dar erro, mas é melhor que coloque
+------------------------------------------------------------
+import './App.css';
+import HelloWorld from './components/HelloWorld';
+
+function App() {
+  
+  const soma = (a,b) => {
+    return a + b
+  }
+  const url_ex = "https://via.placeholder.com/150"  //um site que gera imagens. 150 é 150px por 150px
+  return (
+
+    <div className="App">
+      <h1>Esse é o meu segundo teste.</h1>
+      <p>{2 * 5}</p>
+      <p>{soma(3,4)}</p>
+      <img src={url_ex}/>
+      <HelloWorld/>
+    </div>
+  );
+}
+
+export default App;
+
+-----------------------------------------
+no segundo curso, foi usado CSS modules.
+nas classes de css modules, as classes não podem ter -, pois vai ser interpretado como subtração
+
+proptypes = antes de exportar e depois de declarar a função, pode se definir o tipo da variável que se recebe.
+
+se o tipo não bater, não da erro e sim warning.
+mesma coisa com o isrequired. Se for requirido e não passar, dá warning e não erro.
+
+defaultProps = caso não passe o valor da variável, usa o valor que tá no default. util para quando tentar pegar um dado no backend, ele não vier - colocar NA ou não foi preenchido, por exemplo.
+
+OBS = SE USAR O VALOR QUE TÁ NO DEFAULT, o warning do propTypes pode sumir.
+
+se, num componente, eu colocar a função assim:
+
+<button onclick={meuEvento()}> Ativar.</button>
+
+Ele vai executar a função ao invés de esperar o click. por isso o certo é assim:
+
+<button onclick={meuEvento}> Ativar.</button>
+-----------------------------------------------------
+forma de limpar variável por useState:
+
+const limparEmail = () => {
+        setUserEmail('') //forma de zerar uma variável por estado.
+    }
+	
+ rafce = quando criar um componente novo, exporta com o nome do arquivo, cria a arrow function com o nome do arquivo e coloca o import react from react
+ 
+ --principais erros do react
+ 
+ 1 - loop infinito
+	useEffect sem passar um segundo argumento- sempre carrega.  ( ver em ESTUDO_REACT\App.js)
+
+-----------------------------------------------------------
+2 - Passar props em "" e não em {}. problema: vai ser sempre string.
+
+----------------------------------------------------------
+3 - não utilizar o previous state:
+
+const [list, setList] = useState([1,2,3,4,5])
+
+---------------
+const changeList = (list) => {
+
+	const new_list = list.filter ( (n) => n > 2 )
+	setList(new_list)
+}
+
+<button onClick={ () => changeList(list)}>Mudar Lista </button>
+;;;;;
+ATÉ FUNCIONA. MAS QUAL A MANEIRA MAIS FÁCIL?
+---------------
+cont newChangeList = () => {
+
+	setList( (prev) => prev.filter( (n) => n > 2) )
+}
+
+<button onClick={newChangeList}>Mudar Lista </button>
+
+-------------------------------------------------------------
+4 - Não utilizar o key
+
+LEMBRANDO QUE LIST É [1,2,3,4,5]
+
+<div>
+	{ list.map( (n) => (
+		<p> Número: {n} </p>
+	))}
+</div>
+
+//vai dar WARNING, e não erro. Solução:
+
+<div>
+	{ list.map( (n) => (
+		<p key={n}> Número: {n} </p>
+	))}
+</div>
+
+--------------------------------------------------------------
+5 - Criar componente com case errado.
+
+componente PRECISA começar com letra maiúscula, senao o react vai achar que o componente é um componente do HTMl
+-------------------------------------------------------------
+Aula 23 Curso de React Canal hora de Codar
+
+adicionar no package.json a linha:
+ "backend":"json-server --watch db.json --port 5000" no objeto scripts
+ 
+ isso quer dizer que é possível rodar agora o comando npm run backend. Estamos forçando ser na porta 5000 para não ser na porta 3000 que é a porta do projeto.
+ 
+ também crie um arquivo db.json nesse mesmo diretório. dentro dele, coloque:
+{
+    "projects": []
+}
+
+pronto. abra um OUTRO CMD no vs code com npm run backend e vá no site localhost:5000/projects. irá ver o objeto vazio.
+
+----------------------------------------------------------
+VIDEO ROCKETSEAT - COMEÇANDO NO REACT.JS EM 2022
+
+O create-react-app é um BOILERPLATE - se refere a templates de código que podem ser usados para construção de aplicações com pouca ou nenhuma alteração.
+
+utilizando vite (precisa ter node acima da versão 16-já está):
+
+dê cd pelo cmd até chegar ao diretório desejado para iniciar um novo projeto:
+npm create vite@latest
+
+O PROPRIO CMD VAI AUXILIAR NOS PROXIMOS COMANDOS:
+npm i ou npm install quando for começar um projeto (ja com esse diretório aberto no vscode)
+npm run dev = roda o react com o vite
+
+type Component_Props = {
+	prop1: string;
+}
+
+componentes precisam começar com letra maiuscula
+um componente é uma função que retorna html
+
+para incluir um código JS dentro do HTML, se coloca chaves em volta.
+
+estado = useState cria uma variável que é monitorada pelo componente. sempre que a variavel muda o valor, o componente é remontado, rerenderizado em tela com as novas infos dessa variável.
+
+O QUE VER EM 2023
+
+styled-components, stitches -> Css in Js
+Radix -> Componentes prontos. tipo um dropdown Menu, hover card, progression, context menu
+React Query, GraphQL -> Data Fetching. Como lidar com dados de API's externas.
+State Management
+Testing Library, Cypress - Testing
+Next.Js, Remix - Frameworks
+
+---------------------------------------------------
+porque React tem problemas com hook condicional e loops???
+
+exemplo:
+
+const [counter, setCounter] = useState(1);
+
+function increment(){
+	setCounter(count + 1)
+	setCounter(count + 1)
+	setCounter(count + 1)
+	setCounter(count + 1)
+}
+return (
+	<div>
+		<button onClick={increment}> {counter} </button>
+	</div>
+)
+
+
+-- SÓ SERA INCREMENTADO UMA VEZ, INDEPENDENTE DE QUANTAS VEZES EU CHAME, POIS A VARIÁVEL COUNTER NÃO ESTÁ SENDO ALTERADA EM TODAS AS VEZES QUE É CHAMADA. É COMO SE ELA CHEGASSE NA PRIMEIRA CHAMADA COM VALOR 1, NA SEG COM VALOR 1 E ASSIM POR DIANTE. COMO RESOLVER?
+
+function increment(){
+	setCounter(state => state + 1)
+	setCounter(state => state + 1)
+	setCounter(state => state + 1)
+	setCounter(state => state + 1)
+}
+
+agora sim irá funcionar, atua como uma chamada de callback
+
+
+-------------
+com if não funciona porque se eu renderizar MENOS hooks do que eu tinha anteriormente, o react vai entender que foram passadas menos hooks. Exemplo:
+let state3;
+const [state1] = useState(1)
+const [isModalOpen, setIsModalOpen] = useState(true);
+
+if (isModalOpen){
+	[state3] = useState(3)
+}
+
+const [state2] = useState(2);
+
+return(
+	<div>
+		<button onClick={() => setIsModalOpen(!isModalOpen)}> </button>
+	</div>
+)
+
+na primeira chamada, os hooks:
+
+state1 - valor 1, isModalOpen true, state3 valor 3 e state2 valor 2
+
+na segunda chamada não é passado nenhum valor para state3, é como se tivesse sido ignorado
